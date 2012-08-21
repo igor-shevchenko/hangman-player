@@ -1,10 +1,10 @@
 
 
-class OpenCorporaParser:
+class OpenCorporaDictionaryParser:
     def __init__(self, filename):
         self.filename = filename
 
-    def get_words(self, requirements):
+    def extract(self, requirements):
         return (word for word in (self.get_words(self.extract_lines(requirements))))
 
     def extract_lines(self, requirements):
@@ -15,16 +15,16 @@ class OpenCorporaParser:
 
 
 
-class OpenCorporaParserExtractionRequirements:
-    def __init__(self, required_tags, restricted_tags):
-        self.required_tags = required_tags
-        self.restricted_tags = restricted_tags
+class ExtractionRequirements:
+    def __init__(self, required_tags = None, restricted_tags = None):
+        self.required_tags = required_tags or []
+        self.restricted_tags = restricted_tags or []
 
     def are_satisfied_by(self, line):
         for tag in self.required_tags:
-            if line.search(tag) == -1:
+            if line.find(tag) == -1:
                 return False
         for tag in self.restricted_tags:
-            if line.search(tag) != -1:
+            if line.find(tag) != -1:
                 return False
         return True
