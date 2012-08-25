@@ -5,12 +5,13 @@ class OpenCorporaDictionaryParser:
         self.filename = filename
 
     def extract(self, requirements):
-        return (word for word in (self.get_words(self.extract_lines(requirements))))
+        lines = self.extract_lines_that_satisfy(requirements)
+        return (word for word in (self.get_words_from(lines)))
 
-    def extract_lines(self, requirements):
+    def extract_lines_that_satisfy(self, requirements):
        return (line for line in open(self.filename) if requirements.are_satisfied_by(line))
 
-    def get_words(self, lines):
+    def get_words_from(self, lines):
         return (line.split('\t')[0] for line in lines)
 
 

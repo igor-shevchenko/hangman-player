@@ -2,7 +2,7 @@
 
 import opencorporaparser
 
-FILENAME = '../data/dict.opcorpora.txt'
+FILENAME = '../../data/dict.opcorpora.txt'
 
 requirements = opencorporaparser.ExtractionRequirements(
     required_tags=['NOUN', 'nomn', 'sing'],
@@ -10,8 +10,6 @@ requirements = opencorporaparser.ExtractionRequirements(
 )
 
 parser = opencorporaparser.OpenCorporaDictionaryParser(FILENAME)
-
-count = 0
 
 apellatives = [word.replace('Ё', 'E') for word in parser.extract(requirements)
                                         if word.find('-') == -1]
