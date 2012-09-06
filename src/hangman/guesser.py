@@ -17,7 +17,7 @@ class HangmanGuesser:
 
         if word_mask != mask.UNGUESSED_LETTER_PLACEHOLDER * len(word_mask):
             # try common statistics for words of that length
-            return self.guess_letter(mask.UNGUESSED_LETTER_PLACEHOLDE\
+            return self.guess_letter(mask.UNGUESSED_LETTER_PLACEHOLDER\
                                      * len(word_mask), guessed_letters,
                                      wrong_letters)
         elif word_mask != mask.ALL_WORDS_MASK:
