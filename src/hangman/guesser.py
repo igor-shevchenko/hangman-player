@@ -33,6 +33,7 @@ class DeterminedHangmanGuesser(HangmanGuesser):
                 statistics[letter] = statistics.get(letter, 0) + 1
         result = statistics.items()
         result.sort(key=lambda x: (x[1], x[0]), reverse=True)
+        result = map(lambda x: x[0], result)
         return result
 
 
