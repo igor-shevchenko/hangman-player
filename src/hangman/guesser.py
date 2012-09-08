@@ -11,9 +11,9 @@ class HangmanGuesser:
 
 class DeterminedHangmanGuesser(HangmanGuesser):
     def guess_letter(self, word_mask, guessed_letters, wrong_letters):
-        used_letters = wrong_letters + guessed_letters
-        regex = mask.make_regex_for_mask(word_mask, used_letters)
-        possible_words = self.word_provider.get_matching_words(regex)
+        used_letters = wrong_letters.union(guessed_letters)
+        filtering_function = mask.make_filter_function_for_mask(word_mask, used_letters)
+        possible_words = self.word_provider.get_filtered_words(filtering_function)
         possible_letters = self.get_letter_statistics(possible_words)
         for letter in possible_letters:
             if letter not in used_letters:

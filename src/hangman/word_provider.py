@@ -8,6 +8,9 @@ class WordProvider:
     def get_matching_words(self, regex):
         return list([word for word in self.get_words() if regex.match(word)])
 
+    def get_filtered_words(self, function):
+        return filter(function, self.get_words())
+
 
 class FileWordProvider(WordProvider):
     def __init__(self, filename):

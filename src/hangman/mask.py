@@ -31,4 +31,21 @@ def make_regex_for_mask(mask, disallowed_letters):
         if placeholder_count > 0:
             regex = '%s%s{%d}' % (regex, unguessed_letter_pattern, placeholder_count)
         regex += '$'
+
     return re.compile(regex, re.MULTILINE)
+
+def make_filter_function_for_mask(mask, disallowed_letters):
+    disallowed_letters = set(disallowed_letters)
+    length = len(mask)
+    def function(word):
+        if len(word) != length:
+            return False
+        for i in xrange(length):
+            if mask[i] == word[i] or \
+               (mask[i] == UNGUESSED_LETTER_PLACEHOLDER and
+                word[i] not in disallowed_letters):
+                continue
+            else:
+                return  False
+        return True
+    return function
