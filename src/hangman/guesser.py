@@ -1,5 +1,5 @@
 import mask
-import re
+import operator
 
 class HangmanGuesser:
     def __init__(self, word_provider):
@@ -15,9 +15,9 @@ class DeterminedHangmanGuesser(HangmanGuesser):
         filtering_function = mask.make_filter_function_for_mask(word_mask, used_letters)
         possible_words = self.word_provider.get_filtered_words(filtering_function)
         possible_letters = self.get_letter_statistics(possible_words)
-        for letter in possible_letters:
-            if letter not in used_letters:
-                return letter
+        for letters in possible_letters:
+            if letters[0] not in used_letters:
+                return letters[0]
 
         # if word not in dictionary, try common statistics for all words
         if word_mask != mask.ALL_WORDS_MASK:
@@ -30,10 +30,13 @@ class DeterminedHangmanGuesser(HangmanGuesser):
         statistics = {}
         for word in words:
             for letter in set(word):
-                statistics[letter] = statistics.get(letter, 0) + 1
-        result = statistics.items()
-        result.sort(key=lambda x: (x[1], x[0]), reverse=True)
-        result = map(lambda x: x[0], result)
+                if letter in statistics:
+                    statistics[letter] += 1
+                else:
+                    statistics[letter] = 0
+        result = sorted(statistics.iteritems(), key=operator.itemgetter(1),
+                        reverse=True)
         return result
+
 
 
