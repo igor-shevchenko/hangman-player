@@ -1,3 +1,5 @@
+#-*- coding: utf-8 -*-
+
 class WordProvider:
     def __init__(self, words):
         self.words = words
@@ -13,9 +15,9 @@ class WordProvider:
 
 
 class FileWordProvider(WordProvider):
-    def __init__(self, filename):
+    def __init__(self, filename, encoding):
         f = open(filename)
         words = f.readlines()
         f.close()
-        words = map(lambda word: word.strip(), words)
+        words = map(lambda word: word.decode(encoding).strip(), words)
         WordProvider.__init__(self, words)
