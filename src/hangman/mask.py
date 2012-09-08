@@ -41,11 +41,9 @@ def make_filter_function_for_mask(mask, disallowed_letters):
         if len(word) != length:
             return False
         for i in xrange(length):
-            if (mask[i] == UNGUESSED_LETTER_PLACEHOLDER and
-                word[i] not in disallowed_letters) or\
-                mask[i] == word[i]:
-                continue
-            else:
+            if (mask[i] != UNGUESSED_LETTER_PLACEHOLDER or
+                word[i] in disallowed_letters) and\
+                mask[i] != word[i]:
                 return  False
         return True
     return function

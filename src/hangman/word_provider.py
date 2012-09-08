@@ -6,10 +6,10 @@ class WordProvider:
         return self.words
 
     def get_matching_words(self, regex):
-        return list([word for word in self.get_words() if regex.match(word)])
+        return list([word for word in self.words if regex.match(word)])
 
     def get_filtered_words(self, function):
-        return filter(function, self.get_words())
+        return filter(function, self.words)
 
 
 class FileWordProvider(WordProvider):
