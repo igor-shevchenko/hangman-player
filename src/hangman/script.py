@@ -3,15 +3,18 @@
 import word_provider
 import guesser
 import leader
+import random
 
 FILENAME = "../../data/apellatives.txt"
 
 wp = word_provider.GroupingByLengthFileWordProvider(FILENAME, 'UTF-8')
-g = guesser.DeterminedHangmanGuesser(wp)
+g = guesser.UndeterminedHangmanGuesser(wp, random.Random())
 l = leader.HangmanLeader(g)
-#log = open('log.txt', 'w')
+log = open('log.txt', 'w')
 
 for word in wp.get_words():
-    result = l.play(word)
-    print ("%s : %s (%s, %d mistakes)" % (word, "WIN" if result[0] else "LOSE",
-                                                  result[1], result[2])).encode('UTF-8')
+    result = []
+    for i in xrange(10):
+        result.append(l.play(word)[2])
+    result = map(str,sorted(result))
+    print "%s\t\t%s" %(word, '\t'.join(result))
