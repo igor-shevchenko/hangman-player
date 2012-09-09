@@ -13,7 +13,8 @@ class DeterminedHangmanGuesser(HangmanGuesser):
     def guess_letter(self, word_mask, guessed_letters, wrong_letters):
         used_letters = wrong_letters.union(guessed_letters)
         filtering_function = mask.make_filter_function_for_mask(word_mask, used_letters)
-        possible_words = self.word_provider.get_filtered_words(filtering_function)
+        possible_words = self.word_provider.get_filtered_words_with_length\
+                                    (filtering_function, len(word_mask))
         possible_letters = self.get_letter_statistics(possible_words)
         for letters in possible_letters:
             if letters[0] not in used_letters:
