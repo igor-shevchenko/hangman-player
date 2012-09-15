@@ -8,8 +8,11 @@ class HangmanGuesser:
     def guess_letter(self, word_mask, guessed_letters, wrong_letters):
         used_letters = wrong_letters.union(guessed_letters)
         filtering_function = mask.make_filter_function_for_mask(word_mask, used_letters)
-        possible_words = self.word_provider.get_filtered_words_with_length\
-            (filtering_function, len(word_mask))
+        if word_mask != mask.ALL_WORDS_MASK:
+            possible_words = self.word_provider.get_filtered_words_with_length\
+                (filtering_function, len(word_mask))
+        else:
+            possible_words = self.word_provider.get_filtered_words(filtering_function)
         possible_letters_statistics = self.get_letter_statistics(possible_words)
         letter = self.pick_letter(possible_letters_statistics, used_letters)
         if not letter is None:

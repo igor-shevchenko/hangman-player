@@ -2,7 +2,7 @@
 
 import mask
 
-NUMBER_OF_FEEBLE_ATTEMPTS = 40
+NUMBER_OF_FEEBLE_ATTEMPTS = 33
 
 class HangmanLeader:
     def __init__(self, guesser):
